@@ -189,14 +189,17 @@ def actors_to_dict(actors: Iterable[Actor]):
 
 
 def director_to_dict(director: Director):
-    director_dict = {
-        'full_name': director.director_full_name,
-        'directed_movies': [movie.movie_id for movie in director.directed_movies],
-        'description': director.description,
-        'hyperlink': director.hyperlink,
-        'image_hyperlink': director.image_hyperlink,
-    }
-    return director_dict
+    if isinstance(director, Director):
+        director_dict = {
+            'full_name': director.director_full_name,
+            'directed_movies': [movie.movie_id for movie in director.directed_movies],
+            'description': director.description,
+            'hyperlink': director.hyperlink,
+            'image_hyperlink': director.image_hyperlink,
+        }
+        return director_dict
+    else:
+        return dict()
 
 
 def directors_to_dict(directors: Iterable[Director]):
