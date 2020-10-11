@@ -107,8 +107,7 @@ def test_can_get_movie(in_memory_repo):
     assert len(movie_as_dict['actors']) == 0
 
     genre_names = [dictionary['name'] for dictionary in movie_as_dict['genres']]
-    assert 'Genre 1' in genre_names
-    assert 'Genre 2' in genre_names
+    assert 'Drama' in genre_names
 
 
 def test_cannot_get_movie_with_non_existent_id(in_memory_repo):
@@ -128,7 +127,7 @@ def test_get_first_movie(in_memory_repo):
 def test_get_last_movie(in_memory_repo):
     movies_as_dict = movies_services.get_last_movie(in_memory_repo)
 
-    assert movies_as_dict['id'] == 13
+    assert movies_as_dict['id'] == 14
 
 
 def test_get_movies_by_date_with_one_date(in_memory_repo):
@@ -170,7 +169,7 @@ def test_get_movies_by_date_with_non_existent_date(in_memory_repo):
 
 
 def test_get_movies_by_id(in_memory_repo):
-    target_movie_ids = [12, 13, 14, 15]
+    target_movie_ids = [12, 13, 15, 16]
     movies_as_dict = movies_services.get_movies_by_id(target_movie_ids, in_memory_repo)
 
     # Check that 2 articles were returned from the query.

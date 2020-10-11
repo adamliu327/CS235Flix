@@ -31,7 +31,7 @@ def test_repository_can_retrieve_movie_count(in_memory_repo):
     number_of_movies = in_memory_repo.get_number_of_movies()
 
     # Check that the query returned 6 movies.
-    assert number_of_movies == 13
+    assert number_of_movies == 14
 
 
 def test_repository_can_add_movie(in_memory_repo):
@@ -82,19 +82,19 @@ def test_repository_does_not_retrieve_an_movie_when_there_are_no_movies_for_a_gi
 def test_repository_can_retrieve_genres(in_memory_repo):
     genres: List[Genre] = in_memory_repo.get_genres()
 
-    assert len(genres) == 5
+    assert len(genres) == 7
 
-    genre_one = [genre for genre in genres if genre.genre_name == 'Genre 1'][0]
-    genre_two = [genre for genre in genres if genre.genre_name == 'R'][0]
-    genre_three = [genre for genre in genres if genre.genre_name == 'Genre 2'][0]
-    genre_four = [genre for genre in genres if genre.genre_name == 'Genre 3'][0]
-    genre_five = [genre for genre in genres if genre.genre_name == 'Movie with actors[test]'][0]
+    genre_one = [genre for genre in genres if genre.genre_name == 'Crime'][0]
+    genre_two = [genre for genre in genres if genre.genre_name == 'Drama'][0]
+    genre_three = [genre for genre in genres if genre.genre_name == 'Movie with director'][0]
+    genre_four = [genre for genre in genres if genre.genre_name == 'Action'][0]
+    genre_five = [genre for genre in genres if genre.genre_name == 'Sci-Fi'][0]
 
-    assert genre_one.number_of_tagged_movies == 7
+    assert genre_one.number_of_tagged_movies == 3
     assert genre_two.number_of_tagged_movies == 8
-    assert genre_three.number_of_tagged_movies == 3
-    assert genre_four.number_of_tagged_movies == 2
-    assert genre_five.number_of_tagged_movies == 4
+    assert genre_three.number_of_tagged_movies == 5
+    assert genre_four.number_of_tagged_movies == 6
+    assert genre_five.number_of_tagged_movies == 5
 
 
 def test_repository_can_get_first_movie(in_memory_repo):
@@ -112,11 +112,11 @@ def test_repository_can_get_movies_by_ids(in_memory_repo):
     assert len(movies) == 3
     assert movies[0].title == 'Schindler\'s List'
     assert movies[1].title == 'The Shawshank Redemption'
-    assert movies[2].title == 'Captain America: Civil War'
+    assert movies[2].title == 'Gekijouban Steins;Gate: Fuka ryouiki no dejavu'
 
 
 def test_repository_does_not_retrieve_movie_for_non_existent_id(in_memory_repo):
-    movies = in_memory_repo.get_movies_by_id([0, 9])
+    movies = in_memory_repo.get_movies_by_id([0, 10])
 
     assert len(movies) == 1
     assert movies[0].title == 'Captain America: Civil War'
@@ -129,9 +129,9 @@ def test_repository_returns_an_empty_list_for_non_existent_ids(in_memory_repo):
 
 
 def test_repository_returns_movie_ids_for_existing_genre(in_memory_repo):
-    movie_ids = in_memory_repo.get_movie_ids_for_genre('Movie with actors[test]')
+    movie_ids = in_memory_repo.get_movie_ids_for_genre('Movie with actors')
 
-    assert movie_ids == [9, 10, 11, 13]
+    assert movie_ids == [10, 11, 12, 14]
 
 
 def test_repository_returns_an_empty_list_for_non_existent_genre(in_memory_repo):
@@ -206,9 +206,6 @@ def test_repository_does_not_add_a_comment_without_a_movie_properly_attached(in_
 
 
 def test_repository_can_retrieve_comments(in_memory_repo):
-    assert len(in_memory_repo.get_reviews()) == 4
+    assert len(in_memory_repo.get_reviews()) == 5
 
 
-# TODO
-# actor相关 * 2
-# director相关 * 2
