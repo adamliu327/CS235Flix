@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<main id="main">
+    <header id="article-header">
+        <h1>{{ directors_title }}</h1>
+    </header>
+
+    <a href="{{director.hyperlink}}">
+        <img src={{director.image_hyperlink}} alt="directorimage">
+    </a>
+    <p>{{ director.description }}</p>
+
+    <a href={{director.hyperlink}} >More information</a>
+
+    <br><br>
+
+    <h2>Directed movies:</h2>
+    {% for movie in movies %}
+    <article id="article">
+        <a href="{{movie.hyperlink}}" target="_blank">
+            <img src={{movie.image_hyperlink}} alt="movieimage" style="width:170px;height:250px;display: block">
+            <h3 style="text-align: center">{{ movie.title }}</h3>
+        </a>
+    </article>
+    {% endfor %}
+
+    <footer>
+    </footer>
+</main>
+{% endblock %}

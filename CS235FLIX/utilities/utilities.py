@@ -33,3 +33,12 @@ def get_actor_and_urls():
         actor_urls[actor_name] = url_for('actors_bp.actors',  name=actor_name)
 
     return actor_urls
+
+
+def get_director_and_urls():
+    director_names = services.get_director_names(repo.repo_instance)
+    director_urls = dict()
+    for director_name in director_names:
+        director_urls[director_name] = url_for('directors_bp.directors', name=director_name)
+
+    return director_urls

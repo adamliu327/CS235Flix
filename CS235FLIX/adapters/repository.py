@@ -52,7 +52,7 @@ class AbstractRepository(abc.ABC):
             raise RepositoryException('Comment not correctly attached to an Movie')
 
     @abc.abstractmethod
-    def get_movies(self) -> list:
+    def get_movies(self) -> List[Movie]:
         """ Returns the Movies stored in the repository. """
         raise NotImplementedError
 
@@ -78,7 +78,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_genres(self) -> list:
+    def get_genres(self) -> List[Genre]:
         """ Returns the Genres stored in the repository. """
         raise NotImplementedError
 
@@ -91,7 +91,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_actor(self, actor_name) -> User:
+    def get_actor(self, actor_name) -> Actor:
         """ Returns the Actor named actor_name from the repository.
 
         If there is no Actor with the given actor_name, this method returns None.
@@ -99,13 +99,18 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_reviews(self):
+    def get_reviews(self) -> List[Review]:
         """ Returns the Reviews stored in the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_actors(self):
+    def get_actors(self) -> List[Actor]:
         """ Returns the Actors stored in the repository. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_directors(self) -> List[Director]:
+        """ Returns the Directors stored in the repository. """
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -117,7 +122,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_date_of_previous_movie(self, movie: Movie):
+    def get_date_of_previous_movie(self, movie: Movie) -> int:
         """ Returns the release_year of an Movie that immediately precedes movie.
 
         If movie is the first Movie in the repository, this method returns None because there are no Movies
@@ -126,7 +131,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_date_of_next_movie(self, movie: Movie):
+    def get_date_of_next_movie(self, movie: Movie) -> int:
         """ Returns the release_year of an Movie that immediately follows movie.
 
         If movie is the lase Movie in the repository, this method returns None because there are no Movies
@@ -135,7 +140,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_first_movie(self):
+    def get_first_movie(self) -> Movie:
         """ Returns the first Movie, ordered by release_year, from the repository.
 
         Returns None if the repository is empty.
@@ -143,7 +148,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_last_movie(self):
+    def get_last_movie(self) -> Movie:
         """ Returns the last Movie, ordered by release_year, from the repository.
 
         Returns None if the repository is empty.
@@ -151,7 +156,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_movie_ids_for_genre(self, genre_name: str):
+    def get_movie_ids_for_genre(self, genre_name: str) -> List[int]:
         """ Returns a list of ids representing Movies that are tagged by genre_name.
 
         If there are Movie that are tagged by genre_name, this method returns an empty list.
@@ -159,7 +164,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_movies_by_id(self, id_list):
+    def get_movies_by_id(self, id_list) -> List[Movie]:
         """ Returns a list of Movies, whose ids match those in id_list, from the repository.
 
         If there are no matches, this method returns an empty list.

@@ -13,6 +13,7 @@ def home():
         'home/home.html',
         selected_movies=utilities.get_selected_movies(),
         genre_urls=utilities.get_genre_and_urls(),
-        actor_urls=utilities.get_actor_and_urls()
+        actor_urls=utilities.get_actor_and_urls(),
+        director_urls=utilities.get_director_and_urls()
     )
 

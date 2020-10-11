@@ -7,7 +7,7 @@ from typing import List
 from bisect import bisect, bisect_left, insort_left
 
 from CS235FLIX.adapters.repository import AbstractRepository, RepositoryException
-from CS235FLIX.domain.model import Movie, User, Actor, Genre, Review, Director, make_genre_association, make_review, make_actor_association
+from CS235FLIX.domain.model import Movie, User, Actor, Genre, Review, Director, make_genre_association, make_review, make_actor_association, make_director_association
 
 
 class MemoryRepository(AbstractRepository):
@@ -56,17 +56,20 @@ class MemoryRepository(AbstractRepository):
     def get_actor(self, actor_name) -> User:
         return next((actor for actor in self._actors if actor.actor_full_name == actor_name), None)
 
+    def get_director(self, director_full_name: str) -> Director:
+        return next((director for director in self._directors if director.director_full_name == director_full_name), None)
+
     def get_reviews(self):
         return self._reviews
 
     def get_actors(self):
         return self._actors
 
+    def get_directors(self):
+        return self._directors
+
     def get_number_of_movies(self):
         return len(self._movies)
-
-    def get_director(self, director_full_name: str) -> Director:
-        return next((director for director in self._directors if director.director_full_name == director_full_name), None)
 
     def get_movies_by_date(self, target_date: int) -> List[Movie]:
         target_movie = Movie(movie_id=None, title="None", release_year=target_date, description="None", hyperlink="None",
@@ -244,6 +247,25 @@ def load_actors(data_path: str, repo: MemoryRepository):
         repo.add_actor(actor)
 
 
+def load_directors(data_path: str, repo: MemoryRepository):
+    directors = dict()
+
+    for data_row in read_csv_file(os.path.join(data_path, 'directors.csv')):
+        number_of_movies = len(data_row) - 5
+        directed_movies = data_row[-number_of_movies:]
+
+        director = Director(
+            director_full_name=data_row[1],
+            description=data_row[2],
+            hyperlink=data_row[3],
+            image_hyperlink=data_row[4]
+        )
+        for movie_id in directed_movies:
+            movie = repo.get_movie(int(movie_id))
+            make_director_association(movie, director)
+        repo.add_director(director)
+
+
 def populate(data_path: str, repo: MemoryRepository):
     # Load articles and tags into the repository.
     load_movies_and_genres(data_path, repo)
@@ -256,3 +278,6 @@ def populate(data_path: str, repo: MemoryRepository):
 
     # Load actors into the repository
     load_actors(data_path, repo)
+
+    # Load directors into the repository
+    load_directors(data_path, repo)

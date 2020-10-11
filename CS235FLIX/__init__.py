@@ -46,5 +46,7 @@ def create_app(test_config=None):
         from .actors import actors
         app.register_blueprint(actors.actors_blueprint)
 
+        from .directors import directors
+        app.register_blueprint(directors.directors_blueprint)
 
     return app

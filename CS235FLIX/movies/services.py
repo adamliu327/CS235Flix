@@ -1,16 +1,22 @@
 from typing import List, Iterable
 
 from CS235FLIX.adapters.repository import AbstractRepository
-from CS235FLIX.domain.model import Movie, Genre, Review, Actor, make_review
+from CS235FLIX.domain.model import Movie, Genre, Review, Actor, Director, make_review
 
 
 class NonExistentMovieException(Exception):
     pass
 
+
 class NonExistentActorException(Exception):
     pass
 
+
 class UnknownUserException(Exception):
+    pass
+
+
+class UnknownDirectorException(Exception):
     pass
 
 
@@ -42,6 +48,15 @@ def get_actor(actor_name: str, repo: AbstractRepository):
         raise NonExistentActorException
 
     return actor_to_dict(actor)
+
+
+def get_director(director_name: str, repo: AbstractRepository):
+    director = repo.get_director(director_name)
+
+    if director is None:
+        raise NonExistentActorException
+
+    return director_to_dict(director)
 
 
 def get_first_movie(repo: AbstractRepository):
@@ -119,6 +134,7 @@ def movie_to_dict(movie: Movie):
         'hyperlink': movie.hyperlink,
         'image_hyperlink': movie.image_hyperlink,
         'actors': actors_to_dict(movie.actors),
+        'director': director_to_dict(movie.director),
         'reviews': reviews_to_dict(movie.reviews),
         'genres': genres_to_dict(movie.genres)
     }
@@ -170,3 +186,18 @@ def actor_to_dict(actor: Actor):
 
 def actors_to_dict(actors: Iterable[Actor]):
     return [actor_to_dict(actor) for actor in actors]
+
+
+def director_to_dict(director: Director):
+    director_dict = {
+        'full_name': director.director_full_name,
+        'directed_movies': [movie.movie_id for movie in director.directed_movies],
+        'description': director.description,
+        'hyperlink': director.hyperlink,
+        'image_hyperlink': director.image_hyperlink,
+    }
+    return director_dict
+
+
+def directors_to_dict(directors: Iterable[Director]):
+    return [director_to_dict(director) for director in directors]

@@ -4,15 +4,43 @@ from typing import List, Iterable
 
 class Director:
 
-    def __init__(self, director_full_name: str):
+    def __init__(self, director_full_name: str, description: str, hyperlink: str, image_hyperlink: str):
         if director_full_name == "" or type(director_full_name) is not str:
             self.__director_full_name = None
         else:
             self.__director_full_name = director_full_name.strip()
 
+        self.__description = description
+        self.__hyperlink = hyperlink
+        self.__image_hyperlink = image_hyperlink
+        self.__directed_movies: List[Movie] = list()
+
     @property
     def director_full_name(self) -> str:
         return self.__director_full_name
+
+    @property
+    def description(self) -> str:
+        return self.__description
+
+    @property
+    def hyperlink(self) -> str:
+        return self.__hyperlink
+
+    @property
+    def image_hyperlink(self) -> str:
+        return self.__image_hyperlink
+
+    @property
+    def directed_movies(self):
+        return self.__directed_movies
+
+    def add_movie(self, movie):
+        if isinstance(movie, Movie):
+            self.__directed_movies.append(movie)
+
+    def is_applied_to(self, movie) -> bool:
+        return movie in self.__directed_movies
 
     def __repr__(self):
         return f'<Director {self.__director_full_name}>'
@@ -40,7 +68,6 @@ class Actor:
         self.__description = description
         self.__hyperlink = hyperlink
         self.__image_hyperlink = image_hyperlink
-
         self.__acted_movies: List[Movie] = list()
         self.__actors_this_one_has_worked_with = set()
 
@@ -490,3 +517,11 @@ def make_actor_association(movie: Movie, actor: Actor):
 
     movie.add_actor(actor)
     actor.add_movie(movie)
+
+
+def make_director_association(movie: Movie, director: Director):
+    if director.is_applied_to(movie):
+        raise ModelException(f'Genre {director.actor_full_name} already applied to Article "{movie.title}"')
+
+    movie.director = director
+    director.add_movie(movie)

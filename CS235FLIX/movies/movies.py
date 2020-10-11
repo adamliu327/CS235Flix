@@ -79,6 +79,7 @@ def movies_by_date():
             selected_movies=utilities.get_selected_movies(2),
             genre_urls=utilities.get_genre_and_urls(),
             actor_urls=utilities.get_actor_and_urls(),
+            director_urls=utilities.get_director_and_urls(),
             first_movie_url=first_movie_url,
             last_movie_url=last_movie_url,
             prev_movie_url=prev_movie_url,
@@ -150,12 +151,14 @@ def movies_by_genre():
         selected_movies=utilities.get_selected_movies(),
         genre_urls=utilities.get_genre_and_urls(),
         actor_urls=utilities.get_actor_and_urls(),
+        director_urls=utilities.get_director_and_urls(),
         first_movie_url=first_movie_url,
         last_movie_url=last_movie_url,
         prev_movie_url=prev_movie_url,
         next_movie_url=next_movie_url,
         show_reviews_for_movie=movie_to_show_reviews
     )
+
 
 @movies_blueprint.route('/review', methods=['GET', 'POST'])
 @login_required
@@ -208,6 +211,7 @@ def review_on_movie():
         selected_movies=utilities.get_selected_movies(),
         genre_urls=utilities.get_genre_and_urls(),
         actor_urls=utilities.get_actor_and_urls(),
+        director_urls=utilities.get_director_and_urls()
     )
 
 

@@ -18,6 +18,14 @@ def get_actor_names(repo: AbstractRepository):
 
     return actor_names
 
+
+def get_director_names(repo: AbstractRepository):
+    directors = repo.get_directors()
+    director_names = [director.director_full_name for director in directors]
+
+    return director_names
+
+
 def get_random_movies(quantity, repo: AbstractRepository):
     movie_count = repo.get_number_of_movies()
 
