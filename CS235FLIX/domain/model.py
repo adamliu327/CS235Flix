@@ -199,9 +199,9 @@ class Movie:
         self.__actors = []
         self.__genres = []
         self.__runtime_minutes = None
-        self._hyperlink: str = hyperlink
-        self._image_hyperlink: str = image_hyperlink
-        self._reviews: List[Review] = list()
+        self.__hyperlink: str = hyperlink
+        self.__image_hyperlink: str = image_hyperlink
+        self.__reviews: List[Review] = list()
 
     # essential attributes
 
@@ -259,18 +259,18 @@ class Movie:
 
     @property
     def hyperlink(self) -> str:
-        return self._hyperlink
+        return self.__hyperlink
 
     @property
     def image_hyperlink(self) -> str:
-        return self._image_hyperlink
+        return self.__image_hyperlink
 
     @property
     def reviews(self) -> Iterable[Review]:
-        return iter(self._reviews)
+        return iter(self.__reviews)
 
     def add_review(self, review: Review):
-        self._reviews.append(review)
+        self.__reviews.append(review)
 
     def add_actor(self, actor: Actor):
         if not isinstance(actor, Actor) or actor in self.__actors:
@@ -354,7 +354,7 @@ class Genre:
         else:
             self.__genre_name = genre_name.strip()
 
-        self._movie_with_genre: List[Movie] = list()
+        self.__movie_with_genre: List[Movie] = list()
 
     @property
     def genre_name(self) -> str:
@@ -362,17 +362,17 @@ class Genre:
 
     @property
     def movie_with_genre(self) -> list:
-        return self._movie_with_genre
+        return self.__movie_with_genre
 
     def is_applied_to(self, movie: Movie) -> bool:
-        return movie in self._movie_with_genre
+        return movie in self.__movie_with_genre
 
     def add_movie(self, movie: Movie):
-        self._movie_with_genre.append(movie)
+        self.__movie_with_genre.append(movie)
 
     @property
     def number_of_tagged_movies(self):
-        return len(self._movie_with_genre)
+        return len(self.__movie_with_genre)
 
     def __repr__(self):
         return f'<Genre {self.__genre_name}>'
