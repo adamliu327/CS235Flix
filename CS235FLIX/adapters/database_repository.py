@@ -1,20 +1,16 @@
 import csv
 import os
-
-from datetime import date
 from typing import List
 
+from flask import _app_ctx_stack
 from sqlalchemy import desc, asc
 from sqlalchemy.engine import Engine
-from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+from sqlalchemy.orm import scoped_session
+from sqlalchemy.orm.exc import NoResultFound
 from werkzeug.security import generate_password_hash
 
-from sqlalchemy.orm import scoped_session
-from flask import _app_ctx_stack
-
-from CS235FLIX.domain.model import Movie, User, Actor, Genre, Review, Director
 from CS235FLIX.adapters.repository import AbstractRepository
-
+from CS235FLIX.domain.model import Movie, User, Actor, Genre, Review, Director
 
 genres = None
 actors = None
@@ -119,7 +115,8 @@ class SqlAlchemyRepository(AbstractRepository):
     def get_director(self, director_full_name: str) -> Director:
         director = None
         try:
-            director = self._session_cm.session.query(Director).filter(Director._Director__director_full_name == director_full_name).one()
+            director = self._session_cm.session.query(Director).filter(
+                Director._Director__director_full_name == director_full_name).one()
         except NoResultFound:
             # Ignore any exception and return None.
             pass

@@ -16,7 +16,6 @@ def actors():
     actor_name = request.args.get("name")
     actor = services.get_actor(actor_name, repo.repo_instance)
     colleagues = services.actors_to_dict(actor['colleagues'])
-    print("colleagues:", colleagues)
     movies = services.get_movies_by_id(actor['acted_movies'], repo.repo_instance)
 
     return render_template(
