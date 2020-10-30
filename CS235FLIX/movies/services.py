@@ -133,10 +133,10 @@ def movie_to_dict(movie: Movie):
         'description': movie.description,
         'hyperlink': movie.hyperlink,
         'image_hyperlink': movie.image_hyperlink,
+        'genres': genres_to_dict(movie.genres),
         'actors': actors_to_dict(movie.actors),
-        'director': director_to_dict(movie.director),
-        'reviews': reviews_to_dict(movie.reviews),
-        'genres': genres_to_dict(movie.genres)
+        'directors': directors_to_dict(movie.directors),
+        'reviews': reviews_to_dict(movie.reviews)
     }
     return movie_dict
 

@@ -84,8 +84,8 @@ movie_directors = Table(
 actor_actors = Table(
     'actor_actors', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('actor_id', ForeignKey('actors.id')),
-    Column('colleague_id', Integer, nullable=False)
+    Column('actor_id', Integer),
+    Column('colleague_id', ForeignKey('actors.id')),
 )
 
 
@@ -126,11 +126,12 @@ def map_model_to_tables():
         '_Director__directed_movies': relationship(
             movies_mapper,
             secondary=movie_directors,
-            backref="_Movie__director"
+            backref="_Movie__directors"
         )
     })
 
-    test = mapper(model.Actor, actors, properties={
+    mapper(model.Actor, actors, properties={
+        '_Actor__id': actors.c.id,
         '_Actor__actor_full_name': actors.c.name,
         '_Actor__description': actors.c.description,
         '_Actor__hyperlink': actors.c.hyperlink,
@@ -143,5 +144,6 @@ def map_model_to_tables():
         '_Actor__actors_this_one_has_worked_with': relationship(
             model.Actor,
             secondary=actor_actors,
+            primaryjoin=actors.c.id==actor_actors.c.actor_id
         )
     })

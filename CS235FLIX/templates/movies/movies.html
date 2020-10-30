@@ -62,9 +62,11 @@
             {% endif %}
         </div>
         <div style="float:left">
-            {% if movie.director|length > 0 %}
-                <h2>Director:</h2>
-                <button class="btn-general" onclick="location.href='{{ director_urls[movie.director.full_name] }}'">{{ movie.director.full_name }}</button>
+            {% if movie.directors|length > 0 %}
+                <h2>Directors:</h2>
+                {% for director in movie.directors %}
+                <button class="btn-general" onclick="location.href='{{ director_urls[director.full_name] }}'">{{ director.full_name }}</button>
+                {% endfor %}
             {% endif %}
         </div>
         {% if movie.id == show_reviews_for_movie %}

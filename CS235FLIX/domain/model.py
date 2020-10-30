@@ -65,6 +65,7 @@ class Actor:
         else:
             self.__actor_full_name = actor_full_name.strip()
 
+        self.__id = None
         self.__description = description
         self.__hyperlink = hyperlink
         self.__image_hyperlink = image_hyperlink
@@ -195,7 +196,7 @@ class Movie:
 
         self.__movie_id = movie_id
         self.__description = description
-        self.__director = None
+        self.__directors = []
         self.__actors = []
         self.__genres = []
         self.__runtime_minutes = None
@@ -243,15 +244,8 @@ class Movie:
             self.__description = None
 
     @property
-    def director(self) -> Director:
-        return self.__director
-
-    @director.setter
-    def director(self, director: Director):
-        if isinstance(director, Director):
-            self.__director = director
-        else:
-            self.__director = None
+    def directors(self):
+        return self.__directors
 
     @property
     def actors(self) -> list:
@@ -288,6 +282,22 @@ class Movie:
             # print(f"Movie.remove_actor: Could not find {actor} in list of actors.")
             pass
 
+    def add_director(self, director: Director):
+        if not isinstance(director, Director) or director in self.__directors:
+            return
+
+        self.__directors.append(director)
+
+    def remove_director(self, director: Director):
+        if not isinstance(director, Director):
+            return
+
+        try:
+            self.__directors.remove(director)
+        except ValueError:
+            # print(f"Movie.remove_genre: Could not find {genre} in list of genres.")
+            pass
+
     @property
     def genres(self) -> list:
         return self.__genres
@@ -318,7 +328,6 @@ class Movie:
             self.__runtime_minutes = val
         else:
             raise ValueError(f'Movie.runtime_minutes setter: Value out of range {val}')
-
 
     def __get_unique_string_rep(self):
         return f"{self.__title}, {self.__release_year}"
