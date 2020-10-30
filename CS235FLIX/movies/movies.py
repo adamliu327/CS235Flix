@@ -21,7 +21,6 @@ movies_blueprint = Blueprint('movies_bp', __name__)
 
 @movies_blueprint.route('/movies_by_date', methods=['GET'])
 def movies_by_date():
-    print(utilities.get_director_and_urls())
     # Read query parameters.
     target_date = request.args.get('date')
     movie_to_show_reviews = request.args.get('view_reviews_for')
