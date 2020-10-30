@@ -45,7 +45,8 @@ Testing requires that file *COMPSCI-235/tests/conftest.py* be edited to set the 
 
 E.g. 
 
-`TEST_DATA_PATH = os.path.join('C:', os.sep, 'Users', 'adam', 'Documents', 'Python dev', 'CS235Flix', 'tests', 'data')`
+TEST_DATA_PATH_MEMORY = os.path.join('C:', os.sep, 'Users', 'adam', 'CS235Flix', 'tests', 'data', 'memory')
+TEST_DATA_PATH_DATABASE = os.path.join('C:', os.sep, 'Users', 'adam', 'CS235Flix', 'tests', 'data', 'database')
 
 assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.sep ensures use of the correct platform path separator):
 
