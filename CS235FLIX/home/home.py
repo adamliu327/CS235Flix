@@ -9,7 +9,6 @@ home_blueprint = Blueprint(
 
 @home_blueprint.route('/', methods=['GET'])
 def home():
-    print("urls:", utilities.get_director_and_urls())
     return render_template(
         'home/home.html',
         selected_movies=utilities.get_selected_movies(),
